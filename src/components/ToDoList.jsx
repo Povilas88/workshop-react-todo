@@ -1,20 +1,45 @@
 import { useState } from 'react';
 
 const ToDoList = () => {
-    const [tasks, setTasks] = useState(['one', 'two', 'three']);
+    const [tasks, setTasks] = useState([]);
     const [newTask, setNewTask] = useState('');
 
     function handelInputChange(event) {
         setNewTask(event.target.value);
     }
 
-    function addTask() {}
+    function addTask() {
+        if (newTask.trim() !== '') {
+            setTasks((t) => [...t, newTask]);
+        }
+    }
 
-    function deleteTask(index) {}
+    function deleteTask(index) {
+        const updatedTask = tasks.filter((_, indx) => indx !== index);
+        setTasks(updatedTask);
+    }
 
-    function moveTaskUp(index) {}
+    function moveTaskUp(index) {
+        const updatedTasks = [...tasks];
+        if (index > 0) {
+            [updatedTasks[index], updatedTasks[index - 1]] = [
+                updatedTasks[index - 1],
+                updatedTasks[index],
+            ];
+        }
+        setTasks(updatedTasks);
+    }
 
-    function moveTaskDown(index) {}
+    function moveTaskDown(index) {
+        const updatedTasks = [...tasks];
+        if (index < tasks.length - 1) {
+            [updatedTasks[index], updatedTasks[index + 1]] = [
+                updatedTasks[index + 1],
+                updatedTasks[index],
+            ];
+        }
+        setTasks(updatedTasks);
+    }
 
     return (
         <>
